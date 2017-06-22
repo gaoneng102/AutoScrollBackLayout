@@ -39,9 +39,8 @@ autoScrollBackLayout.bindScrollBack();
 ```
 ## 原理
 - 针对ListView,通过反射和动态代理的方式监听OnScrollListener，这样就不会影响已有的OnScrollListener的正常运行。
-
-但是这里需要注意的是，如果已经使用`ListView.setOnScrollListener()`设置过监听，
-一定要在其后面调用`autoScrollBackLayout.bindScrollBack()`——
+**但是这里需要注意的是，如果已经使用`ListView.setOnScrollListener()`设置过监听，
+一定要在其后面调用`autoScrollBackLayout.bindScrollBack()`**
 ```
  private void hookScrollListenerForListview() {
         try {
