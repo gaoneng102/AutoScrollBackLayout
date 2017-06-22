@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AutoScrollBackLayout</string>
+    <string name="listview">Listview</string>
+    <string name="recyclerview">Recyclerview</string>
+</resources>
