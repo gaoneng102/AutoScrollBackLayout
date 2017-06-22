@@ -71,3 +71,19 @@ autoScrollBackLayout.bindScrollBack();
     }
 ```
 - 针对RecyclerView，因为其内部的监听已经是`List<OnScrollListener>`形式，所以直接`addOnScrollListener()`方式添加即可；
+```
+private void addScrollListenerForRecyclerView() {
+        ((RecyclerView) wrapView).addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (myScrollLitener != null)
+                    myScrollLitener.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (myScrollLitener != null) myScrollLitener.onScroll(recyclerView, dy, 0, 0);
+            }
+        });
+    }
+```
