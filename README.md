@@ -5,7 +5,13 @@
 ![](https://github.com/gaoneng102/AutoScrollBackLayout/blob/master/preview.gif)
 
 ## 使用
-1、通过xml文件添加如下：
+1、添加依赖：
+```
+compile ('com.gaoneng.library:autoscrollbacklayout:1.0.0'){
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+    }
+```
+2、通过xml文件添加如下：
 ```
 <?xml version="1.0" encoding="utf-8"?>
 <com.gaoneng.library.AutoScrollBackLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -26,7 +32,7 @@
         android:drawSelectorOnTop="false" />
 </com.gaoneng.library.AutoScrollBackLayout>
 ```
-2、调用bindScrollBack()：
+3、调用bindScrollBack()：
 ```
 AutoScrollBackLayout autoScrollBackLayout = (AutoScrollBackLayout) findViewById(R.id.scroll_layout);
 ListView listView = (ListView) findViewById(android.R.id.list);
