@@ -20,6 +20,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(":library")
+    compile project(':autoscrollbacklayout')
     compile 'com.android.support:appcompat-v7:25.3.1'
 }
