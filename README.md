@@ -1,5 +1,5 @@
 # AutoScrollBackLayout
-在ListView或者RecyclerView列表滚动向底部一段距离，就自动显示一个返回顶部的按钮
+在ListView，GridView，RecyclerView列表滚动向底部一段距离，就自动显示一个返回顶部的按钮
 
 ## 效果
 ![](https://github.com/gaoneng102/AutoScrollBackLayout/blob/master/preview.gif)
@@ -7,7 +7,7 @@
 ## 使用
 1、添加依赖：
 ```
-compile ('com.gaoneng.library:autoscrollbacklayout:1.0.0'){
+compile ('com.gaoneng.library:autoscrollbacklayout:1.1.0'){
         exclude group: 'com.android.support', module: 'recyclerview-v7'
     }
 ```
@@ -44,8 +44,8 @@ listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1
 autoScrollBackLayout.bindScrollBack();
 ```
 ## 原理
-- 针对ListView,通过反射和动态代理的方式监听OnScrollListener，这样就不会影响已有的OnScrollListener的正常运行。
-**但是这里需要注意的是，如果已经使用`ListView.setOnScrollListener()`设置过监听，
+- 针对ListView和GridView,通过反射和动态代理的方式监听OnScrollListener，这样就不会影响已有的OnScrollListener的正常运行。
+**但是这里需要注意的是，如果已经使用`AbsListView.setOnScrollListener()`设置过监听，
 一定要在其后面调用`autoScrollBackLayout.bindScrollBack()`**
 ```
  private void hookScrollListenerForListview() {
@@ -93,3 +93,16 @@ private void addScrollListenerForRecyclerView() {
         });
     }
 ```
+
+## 其他属性
+attrs | value
+------------ | -------------
+app:show_scroll | true/false 是否自动显示返回按钮，默认true
+app:scroll_distance | dp 触发显示返回按钮的滚动距离，默认100dp
+app:show_animation | anim 按钮出现动画，默认 R.anim.fab_scale_up
+app:hide_animation | anim 按钮出现动画，默认 R.anim.fab_scale_down
+app:auto_arrow_icon | drawable 按钮图标，默认 R.drawable.go_top
+app:scroll_gravity | Gravity 按钮的位置，默认 Gravity.BOTTOM and Gravity.CENTER_HORIZONTAL
+
+
+
