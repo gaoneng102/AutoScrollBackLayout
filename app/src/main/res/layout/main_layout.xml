@@ -23,6 +23,16 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="32dp"
         android:background="@drawable/bg_btn_shape"
+        android:text="@string/gridview"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btn_3"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_btn_shape"
         android:text="@string/recyclerview"
         android:textSize="16sp" />
 </LinearLayout>

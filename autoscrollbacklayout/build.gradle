@@ -8,7 +8,6 @@ version = "1.0.0"
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
-    resourcePrefix "autoscrollback_"    //这个随便填
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 25

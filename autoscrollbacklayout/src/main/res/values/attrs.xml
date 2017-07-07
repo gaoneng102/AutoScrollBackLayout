@@ -3,8 +3,10 @@
     <!-- AutoScrollBackLayout控件自定义属性 -->
     <declare-styleable name="AutoScrollBackLayout">
         <attr name="show_scroll" format="boolean" />
+        <attr name="scroll_distance" format="dimension" />
         <attr name="show_animation" format="reference" />
         <attr name="hide_animation" format="reference" />
+        <attr name="auto_arrow_icon" format="reference" />
         <attr name="scroll_gravity">
             <!-- Push object to the top of its container, not changing its size. -->
             <flag name="top" value="0x30" />

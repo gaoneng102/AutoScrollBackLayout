@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.gaoneng.library.AutoScrollBackLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scroll_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    app:show_scroll="true">
+
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:drawSelectorOnTop="false"
+        android:numColumns="3" />
+</com.gaoneng.library.AutoScrollBackLayout>

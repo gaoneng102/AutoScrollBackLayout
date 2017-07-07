@@ -9,7 +9,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_layout);
         findViewById(R.id.btn_1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -17,6 +17,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         findViewById(R.id.btn_2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GridViewDemoActivity.start(MainActivity.this);
+            }
+        });
+        findViewById(R.id.btn_3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 RecyclerViewDemoActivity.start(MainActivity.this);

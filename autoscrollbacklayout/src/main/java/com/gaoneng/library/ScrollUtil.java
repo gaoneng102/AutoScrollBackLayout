@@ -3,7 +3,7 @@ package com.gaoneng.library;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ListView;
+import android.widget.AbsListView;
 
 
 public class ScrollUtil {
@@ -13,14 +13,14 @@ public class ScrollUtil {
         if (scrollView == null) {
             return;
         }
-        if (scrollView instanceof ListView) {
-            smoothScrollListViewToTop((ListView) scrollView, listener);
+        if (scrollView instanceof AbsListView) {
+            smoothScrollListViewToTop((AbsListView) scrollView, listener);
         } else if (scrollView instanceof RecyclerView) {
             smoothScrollListViewToTop((RecyclerView) scrollView, listener);
         }
     }
 
-    public static void smoothScrollListViewToTop(final ListView listView, final ScrollToTopListener listener) {
+    public static void smoothScrollListViewToTop(final AbsListView listView, final ScrollToTopListener listener) {
         if (listView == null) {
             return;
         }

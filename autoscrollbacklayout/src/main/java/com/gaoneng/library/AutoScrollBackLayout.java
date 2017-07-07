@@ -17,7 +17,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
@@ -42,6 +41,7 @@ public class AutoScrollBackLayout extends FrameLayout {
     private MyScrollLitener myScrollLitener;
     private DismissRunable dismissRunable;
     private int showScrollDistance;
+    private int arrowIcon;
 
     public AutoScrollBackLayout(@NonNull Context context) {
         super(context);
@@ -61,14 +61,15 @@ public class AutoScrollBackLayout extends FrameLayout {
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         if (isInEditMode()) return;
         TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.AutoScrollBackLayout, defStyleAttr, 0);
-        mShowScroll = attr.getBoolean(R.styleable.AutoScrollBackLayout_show_scroll, false);
+        mShowScroll = attr.getBoolean(R.styleable.AutoScrollBackLayout_show_scroll, true);
         int showAnimResourceId = attr.getResourceId(R.styleable.AutoScrollBackLayout_show_animation, R.anim.fab_scale_up);
         mShowAnimation = AnimationUtils.loadAnimation(getContext(), showAnimResourceId);
         int hideAnimResourceId = attr.getResourceId(R.styleable.AutoScrollBackLayout_hide_animation, R.anim.fab_scale_down);
         mHideAnimation = AnimationUtils.loadAnimation(getContext(), hideAnimResourceId);
         scroll_gravity = attr.getInt(R.styleable.AutoScrollBackLayout_scroll_gravity, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+        showScrollDistance = attr.getDimensionPixelSize(R.styleable.AutoScrollBackLayout_scroll_distance, 100);
+        arrowIcon = attr.getResourceId(R.styleable.AutoScrollBackLayout_auto_arrow_icon, R.drawable.go_top);
         attr.recycle();
-        showScrollDistance = DensityUtils.dp2px(context, 100f);
         myScrollLitener = new MyScrollLitener();
         dismissRunable = new DismissRunable();
     }
@@ -76,11 +77,11 @@ public class AutoScrollBackLayout extends FrameLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        attachListView();
+        attachAbsListView();
         attachScrollBackView();
     }
 
-    private void attachListView() {
+    private void attachAbsListView() {
         if (getChildCount() > 0) {
             wrapView = findTargetScrollView(this);
             if (DEBUG) {
@@ -91,7 +92,7 @@ public class AutoScrollBackLayout extends FrameLayout {
 
     private View findTargetScrollView(View view) {
         if (view != null) {
-            if (view instanceof ListView || view instanceof RecyclerView) return view;
+            if (view instanceof AbsListView || view instanceof RecyclerView) return view;
             if (view instanceof ViewGroup) {
                 View target = null;
                 ViewGroup viewGroup = (ViewGroup) view;
@@ -106,7 +107,7 @@ public class AutoScrollBackLayout extends FrameLayout {
 
     private void attachScrollBackView() {
         scrollBackView = new ImageView(getContext());
-        scrollBackView.setImageResource(R.drawable.go_top);
+        scrollBackView.setImageResource(arrowIcon);
         if (mShowScroll) {
             scrollBackView.setVisibility(INVISIBLE);
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -118,20 +119,20 @@ public class AutoScrollBackLayout extends FrameLayout {
     }
 
     /**
-     * 如果已经使用<code>ListView.setOnScrollListener()</code>设置过监听，一定要在其后面调用；
-     * 如果没有使用<code>ListView.setOnScrollListener()</code>，就在onCreate()或者onActivityCreated()中调用即可;
+     * 如果已经使用<code>AbsListView.setOnScrollListener()</code>设置过监听，一定要在其后面调用；
+     * 如果没有使用<code>AbsListView.setOnScrollListener()</code>，就在onCreate()或者onActivityCreated()中调用即可;
      */
     public void bindScrollBack() {
         if (wrapView != null && scrollBackView != null && mShowScroll) {
-            if (wrapView instanceof ListView) {
-                hookScrollListenerForListview();
+            if (wrapView instanceof AbsListView) {
+                hookScrollListenerForAbsListview();
             } else if (wrapView instanceof RecyclerView) {
                 addScrollListenerForRecyclerView();
             }
         }
     }
 
-    private void hookScrollListenerForListview() {
+    private void hookScrollListenerForAbsListview() {
         try {
             //通过反射获取mOnScrollListener对象
             Field scrollListenerField = AbsListView.class.getDeclaredField("mOnScrollListener");
@@ -181,8 +182,8 @@ public class AutoScrollBackLayout extends FrameLayout {
      */
     private int getScrollDistance(int dy) {
         if (wrapView == null) return 0;
-        if (wrapView instanceof ListView) {
-            ListView listView = (ListView) wrapView;
+        if (wrapView instanceof AbsListView) {
+            AbsListView listView = (AbsListView) wrapView;
             View topChild = listView.getChildAt(0);
             return topChild == null ? 0 : listView.getFirstVisiblePosition() * topChild.getHeight() - topChild.getTop();
         } else if (wrapView instanceof RecyclerView) {
@@ -246,6 +247,17 @@ public class AutoScrollBackLayout extends FrameLayout {
             show(animate);
         } else {
             hide(animate);
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (dismissRunable != null) {
+            removeCallbacks(dismissRunable);
+        }
+        if (scrollBackView != null) {
+            scrollBackView.clearAnimation();
         }
     }
 
