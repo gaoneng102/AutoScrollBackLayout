@@ -102,7 +102,7 @@ app:scroll_distance | dp 触发显示返回按钮的滚动距离，默认100dp
 app:show_animation | anim 按钮出现动画，默认 R.anim.fab_scale_up
 app:hide_animation | anim 按钮出现动画，默认 R.anim.fab_scale_down
 app:auto_arrow_icon | drawable 按钮图标，默认 R.drawable.go_top
-app:scroll_gravity | Gravity 按钮的位置，默认 Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL
+app:scroll_gravity | Gravity 按钮的位置，默认 Gravity.BOTTOM and Gravity.CENTER_HORIZONTAL
 
 
 
