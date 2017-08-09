@@ -7,7 +7,7 @@
 ## 使用
 1、添加依赖：
 ```
-compile ('com.gaoneng.library:autoscrollbacklayout:1.1.0'){
+compile ('com.gaoneng.library:autoscrollbacklayout:1.1.1'){
         exclude group: 'com.android.support', module: 'recyclerview-v7'
     }
 ```
